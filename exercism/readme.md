@@ -1,0 +1,1 @@
+[reference](https://exercism.org/tracks/bash/exercises)

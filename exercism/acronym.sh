@@ -1,0 +1,1 @@
+IFS=' -' eval printf '%c' '${1^^}'
