@@ -9,7 +9,7 @@
 # printf '%s\n' **
 # 2=======================================================
 
-options=$(getopt -o ri:d -- "$@") || exit $?
+options=$(getopt -o ri:d -- "$@") || exit
 eval set -- "$options"
 shopt -s extglob 
 shopt -s nullglob
