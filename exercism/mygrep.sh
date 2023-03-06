@@ -6,19 +6,19 @@ eval set -- "$options"
 while true; do
     case "$1" in
         -n) # print
-            NUMBER=1
+            NUMBER=
             shift ;;
         -l) # print
-            FILE_NAME=1
+            FILE_NAME=
             shift ;;
         -i) # matching
             shopt -s nocasematch
             shift ;;
         -v) # matching
-            INVERT=1
+            INVERT=
             shift ;;
         -x) # matching
-            LINE=1
+            LINE=
             shift ;;
         --)
             shift
@@ -27,7 +27,7 @@ while true; do
 done
 
 pattern=${1?there is no pattern}
-[ -v "$LINE" ] && pattern="^$pattern\$" # ...?
+[ -v LINE ] && pattern="^$pattern\$" # ...?
 shift
 
 files=( "${@-/dev/stdin}" )
@@ -42,12 +42,13 @@ print() { # 1(file), 2(string), 3(number)
     fi
 }
 
-eval 'match2() {' "${INVERT:+!}" '[[ $line =~ $pattern ]]; }'
+eval 'match2() {' "${INVERT+!}" '[[ $line =~ $pattern ]]; }'
 
 match1() {
     local cnt=0
     while IFS= read -r line || [ -n "$line" ]; do
-        match2 && { ((++cnt)); print; }
+        ((++cnt))
+        match2 && print
     done
 }
 
